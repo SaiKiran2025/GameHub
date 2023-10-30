@@ -2,18 +2,19 @@ import { useEffect, useState } from "react";
 import apiCleint from "../services/api-cleint";
 import { CanceledError } from "axios";
 
-interface games {
+export interface Game {
   id: number;
   name: string;
+  background_image: string;
 }
 
 interface FetchGamesResponse {
   count: number;
-  results: games[];
+  results: Game[];
 }
 
 const useGames = () => {
-  const [games, setGames] = useState<games[]>([]);
+  const [games, setGames] = useState<Game[]>([]);
   const [error, setError] = useState("");
 
   useEffect(() => {
