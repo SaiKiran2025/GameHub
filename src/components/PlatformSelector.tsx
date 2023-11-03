@@ -12,19 +12,34 @@ import { BsChevronDown } from "react-icons/bs";
 import usePlatforms from "../hooks/usePlatforms";
 import { Platform } from "../hooks/useGames";
 
-export const PlatformSelector = () => {
-  const { data, error, isLoading } = usePlatforms();
+interface Props {
+  onSelectPlatform: (platform: Platform) => void;
+  selectedPlatform: Platform | null;
+}
 
-  if (error) return null;
+export const PlatformSelector = ({
+  onSelectPlatform,
+  selectedPlatform,
+}: Props) => {
+  const { data, error, isLoading } = usePlatforms();
 
   return (
     <Menu>
-      <MenuButton as={Button} rightIcon={<BsChevronDown />}>
-        Platforms
-      </MenuButton>
+      <HStack>
+        <MenuButton as={Button} rightIcon={<BsChevronDown />}>
+          {selectedPlatform?.name || "Platforms"}
+        </MenuButton>
+        {isLoading && <Spinner />}
+        {error && <Text>{error}</Text>}
+      </HStack>
       <MenuList>
         {data.map((platform) => (
-          <MenuItem key={platform.id}>{platform.name}</MenuItem>
+          <MenuItem
+            onClick={() => onSelectPlatform(platform)}
+            key={platform.id}
+          >
+            {platform.name}
+          </MenuItem>
         ))}
       </MenuList>
     </Menu>
