@@ -29,8 +29,6 @@ export const PlatformSelector = ({
         <MenuButton as={Button} rightIcon={<BsChevronDown />}>
           {selectedPlatform?.name || "Platforms"}
         </MenuButton>
-        {isLoading && <Spinner />}
-        {error && <Text>{error}</Text>}
       </HStack>
       <MenuList>
         {data.map((platform) => (
